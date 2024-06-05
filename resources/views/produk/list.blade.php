@@ -11,11 +11,11 @@
 <form>
     <div class="row">
         <div class="col">
-            <label>Masukkan Kode</label>
+            <label>Masukkan Batas Maksimal Stok</label>
             <input class="form-control" type="text" name="cari" id="cari">
         </div>
         <div class="col">
-            <input type="submit" value="Cari ID" class="btn btn-primary" style="margin-top:33px">
+            <input type="submit" value="Cari Produk" class="btn btn-primary" style="margin-top:33px" id="">
         </div>
     </div>
 </form>
@@ -137,10 +137,15 @@
 		"ajax": {
 			url: url,
 			data: function (d) {
-
+                d.stok = $("#cari").val();
        		}
 		},
 
 	});
+
+    $("form").on('submit', function(e){
+        e.preventDefault();
+        tabel.ajax.reload();
+    })
 </script>
 @endsection

@@ -203,6 +203,7 @@ class Produk extends Controller
     {
         $search = $request->query('search');
         $order = $request->query('order');
+        $search_stok = $request->query('stok');
 
         switch ($order[0]['column']) {
             case '0':
@@ -231,10 +232,21 @@ class Produk extends Controller
         }
 
         $data_db_total = Produkmodel::all();
-        $data_db_filtered = Produkmodel::where('nama_produk', 'like', '%'.$search['value'].'%')->get();
+        $data_db_filtered = Produkmodel::where('nama_produk', 'like', '%'.$search['value'].'%');
 
-        $data_db = Produkmodel::where('nama_produk', 'like', '%'.$search['value'].'%')
-        ->offset($request->query('start'))
+        if ($search_stok != '' && $search_stok != null) {
+            $data_db_filtered = $data_db_filtered->where('stok', '<=', $search_stok);
+        }
+
+        $data_db_filtered = $data_db_filtered->get();
+
+        $data_db = Produkmodel::where('nama_produk', 'like', '%'.$search['value'].'%');
+
+        if ($search_stok != '' && $search_stok != null) {
+            $data_db = $data_db->where('stok', '<=', $search_stok);
+        }
+
+        $data_db = $data_db->offset($request->query('start'))
         ->limit($request->query('length'))
         ->orderByRaw($orderby.' '.$order[0]['dir'])
         ->get(['produk.*']);

@@ -5,6 +5,9 @@
 @endsection
 
 @section('konten')
+<link rel="stylesheet" type="text/css" href="{{ url('DataTables/DataTables-
+1.10.25/css/dataTables.bootstrap4.min.css') }}">
+
 <form>
     <div class="row">
         <div class="col">
@@ -18,16 +21,18 @@
 </form>
 
 <table border="1" id="data-list" class="table">
-    <tr>
-        <th>No.</th>
-        <th>Kode</th>
-        <th>Nama</th>
-        <th>Stok</th>
-        <th>Harga</th>
-        <th>Deskripsi</th>
-        <th>Gambar</th>
-        <th>OPSI</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Stok</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
+            <th>Gambar</th>
+            <th>OPSI</th>
+        </tr>
+    </thead>
 </table>
 @endsection
 
@@ -107,16 +112,35 @@
             })
         }
 
-        ambil_data();
+        // ambil_data();
 
         $("form").on('submit', function(e){
             e.preventDefault();
             var kode = $("input[name=cari]").val();
-            ambil_data(kode);
+            // ambil_data(kode);
         })
 
         function resetTable() {
-        	$( "#data-list" ).html( "<tr> <th>No.</th> <th>Kode</th> <th>Nama</th> <th>Stok</th> <th>Harga</th> <th>Deskripsi</th> <th>Gambar</th> <th>OPSI</th> </tr>" );
+        	$( "#data-list" ).html( "<thead> <tr> <th>No.</th> <th>Kode</th> <th>Nama</th> <th>Stok</th> <th>Harga</th> <th>Deskripsi</th> <th>Gambar</th> <th>OPSI</th> </tr> </thead>" );
         }
+</script>
+
+
+<script type="text/javascript" src="{{ url('DataTables/datatables.min.js') }}"></script>
+
+<script type="text/javascript">
+	var url = '{{ url("api/produk/dataTable") }}';
+
+	var tabel = $("#data-list").DataTable({
+		"processing": true,
+		"serverSide": true,
+		"ajax": {
+			url: url,
+			data: function (d) {
+
+       		}
+		},
+
+	});
 </script>
 @endsection

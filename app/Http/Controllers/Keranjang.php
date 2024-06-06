@@ -32,11 +32,20 @@ class Keranjang extends Controller
             'id_produk' => 'required',
         ]);
 
-        $keranjang = new KeranjangModel([
-            'id_produk' => $request->get('id_produk'),
-            'jumlah_beli' => 1,
-            'id_user' => 1,
-        ]);
+        $id_produk = $request->get('id_produk');
+
+        $cek_produk_di_keranjang = KeranjangModel::where('id_produk', $id_produk)->first();
+
+        if($cek_produk_di_keranjang == null) {
+            $keranjang = new KeranjangModel([
+                'id_produk' => $id_produk,
+                'jumlah_beli' => 1,
+                'id_user' => 1,
+            ]);
+        } else {
+            $keranjang = KeranjangModel::find($cek_produk_di_keranjang->id_keranjang);
+            $keranjang->jumlah_beli = $cek_produk_di_keranjang->jumlah_beli+1;
+        }
 
         $saved = $keranjang->save();
 

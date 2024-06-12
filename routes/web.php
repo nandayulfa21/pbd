@@ -20,3 +20,7 @@ Route::get('/produk', [Produk::class, 'index']);
 Route::get('/produk/form', [Produk::class, 'create']);
 Route::get('/produk/form/{id}', [Produk::class, 'edit']);
 Route::get('/keranjang', [Keranjang::class, 'index']);
+
+Route::get('/checkout', function () {
+    return 'Dalam tahap pengembangan';
+});;

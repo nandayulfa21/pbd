@@ -28,3 +28,6 @@ Route::delete('/produk/hapus', [Produk::class, 'destroy']);
 
 Route::get('/keranjang/all', [Keranjang::class, 'getList']);
 Route::post('/keranjang', [Keranjang::class, 'store']);
+
+
+Route::get('/produk/dataTable', [Keranjang::class, 'dataDatables']);

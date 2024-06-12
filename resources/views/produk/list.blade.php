@@ -5,6 +5,9 @@
 @endsection
 
 @section('konten')
+<link rel="stylesheet" type="text/css" href="{{ url('DataTables/DataTables-
+1.10.25/dataTables.bootstrap4.min.css') }}">
+
 <form>
     <div class="row">
         <div class="col">
@@ -19,14 +22,16 @@
 
 <table border="1" id="data-list" class="table">
     <tr>
-        <th>No.</th>
-        <th>Kode</th>
-        <th>Nama</th>
-        <th>Stok</th>
-        <th>Harga</th>
-        <th>Deskripsi</th>
-        <th>Gambar</th>
-        <th>OPSI</th>
+        <thead>
+            <th>No.</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Stok</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
+            <th>Gambar</th>
+            <th>OPSI</th>
+        </thead>
     </tr>
 </table>
 @endsection
@@ -116,7 +121,26 @@
         })
 
         function resetTable() {
-        	$( "#data-list" ).html( "<tr> <th>No.</th> <th>Kode</th> <th>Nama</th> <th>Stok</th> <th>Harga</th> <th>Deskripsi</th> <th>Gambar</th> <th>OPSI</th> </tr>" );
+        	$( "#data-list" ).html( "<tr> <thead> <th>No.</th> <th>Kode</th> <th>Nama</th> <th>Stok</th> <th>Harga</th> <th>Deskripsi</th> <th>Gambar</th> <th>OPSI</th> </thead> </tr>" );
         }
+</script>
+
+
+<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
+
+<script type="text/javascript">
+	var url = '{{ url("api/produk/dataTable") }}';
+
+	var tabel = $("#data-list").DataTable({
+		"processing": true,
+		"serverSide": true,
+		"ajax": {
+			url: url,
+			data: function (d) {
+
+       		}
+		},
+
+	});
 </script>
 @endsection

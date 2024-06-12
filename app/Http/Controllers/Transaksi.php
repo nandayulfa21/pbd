@@ -34,14 +34,18 @@ class Transaksi extends Controller
         ->selectRaw('sum(produk.harga * keranjang.jumlah_beli) as total')
         ->first();
 
+        $kecamatan = explode('||', $request->get('kecamatan'));
+        $provinsi = explode('||', $request->get('provinsi'));
+        $kota = explode('||', $request->get('kota'));
+
         $trans = new TransaksiModel([
             'tgl_transaksi' => date("Y-m-d H:i:s"),
             'total_bayar' => $data->total,
             'nama' => $request->get('nama'),
             'alamat_jalan' => $request->get('alamat_jalan'),
-            'kecamatan' => $request->get('kecamatan'),
-            'kota' => $request->get('kota'),
-            'provinsi' => $request->get('provinsi'),
+            'kecamatan' => $kecamatan[1],
+            'kota' => $kota[1],
+            'provinsi' => $provinsi[1],
             'id_user' => 1
         ]);
 

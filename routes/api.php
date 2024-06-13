@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Produk;
 use App\Http\Controllers\Keranjang;
+use App\Http\Controllers\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,6 @@ Route::delete('/produk/hapus', [Produk::class, 'destroy']);
 
 Route::get('/keranjang/all', [Keranjang::class, 'getList']);
 Route::post('/keranjang', [Keranjang::class, 'store']);
+
 Route::get('/produk/dataTable', [Produk::class, 'dataDatables']);
+Route::get('/transaksi/dataTable', [Transaksi::class, 'dataDatables']);

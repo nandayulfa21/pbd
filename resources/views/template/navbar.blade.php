@@ -39,6 +39,12 @@
 						<p>Keranjang</p>
 					</a>
 				</li>
+                <li class="nav-item">
+					<a href="{{ url('transaksi') }}" class="nav-link">
+						<i class="fas fa-circle nav-icon"></i>
+						<p>Transaksi</p>
+					</a>
+				</li>
 				<li class="nav-item">
 					<a href="{{ url('login') }}" class="nav-link">
 						<i class="fas fa-circle nav-icon"></i>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Produk;
 use App\Http\Controllers\Keranjang;
+use App\Http\Controllers\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/produk', [Produk::class, 'index']);
 Route::get('/produk/form', [Produk::class, 'create']);
 Route::get('/produk/form/{id}', [Produk::class, 'edit']);
 Route::get('/keranjang', [Keranjang::class, 'index']);
-Route::get('/checkout', function () {
-    return 'Dalam tahap pengembangan';
-   });;
+
+Route::get('/checkout', [Transaksi::class, 'checkout']);
+Route::post('/checkout', [Transaksi::class, 'store']);
+
+Route::get('/transaksi', [Transaksi::class, 'index']);

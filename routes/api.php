@@ -32,3 +32,6 @@ Route::post('/keranjang', [Keranjang::class, 'store']);
 
 Route::get('/produk/dataTable', [Produk::class, 'dataDatables']);
 Route::get('/transaksi/dataTable', [Transaksi::class, 'dataDatables']);
+Route::get('/provinsi', [Keranjang::class, 'get_prov']);
+Route::get('/kota/{kode}', [Keranjang::class, 'get_kota']);
+Route::get('/kecamatan/{kode}', [Keranjang::class, 'get_kec']);

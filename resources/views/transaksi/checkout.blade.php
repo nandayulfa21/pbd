@@ -32,8 +32,7 @@
 			<td>Kota</td>
 			<td>
 			<select name="kota" id="kota" class="form-control" required=""onchange="ambil_kecamatan()">
-
-                    <option value="">--Pilih Salah Satu--</option>
+            <option value="">--Pilih Salah Satu--</option>
                 </select>
 			</td>
 		</tr>
@@ -69,12 +68,12 @@
 	}
 	})
 	}
+ambil_prov();
 
-	ambil_prov();
 	function ambil_kota() {
 	var prov = $('#provinsi').val().split("||");
 	var link = '{{ url("api/kota/") }}' + '/' + prov[0];
-	$ajax(link, {
+	$.ajax(link, {
 		type:'GET',
 		succes : function (data, status, xhr) {
 			$('#kota').html(data);
@@ -86,9 +85,9 @@
 	}
 
 	function ambil_kecamatan() {
-	var kota = $('#kecamatan').val().split("||");
+	var kota = $('#kota').val().split("||");
 	var link = '{{ url("api/kecamatan/") }}' + '/' + kota[0];
-	$ajax(link, {
+	$.ajax(link, {
 		type:'GET',
 		succes : function (data, status, xhr) {
 			$('#kecamatan').html(data);

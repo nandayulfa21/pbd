@@ -7,6 +7,9 @@
 @section('konten')
 <link rel="stylesheet" type="text/css" href="{{ url('Chartist/chartist.min.css') }}">
 
+<link rel="stylesheet" type="text/css" href="{{ url('DataTables/DataTables-
+1.10.25/css/dataTables.bootstrap4.min.css') }}">
+
     <form>
         <div class="row">
             <div class="col">
@@ -22,6 +25,20 @@
 
     <div id="chartHours" class="ct-chart"></div>
 
+    <hr/>
+
+    <table border="1" id="data-list" class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tanggal</th>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Nominal</th>
+            </tr>
+        </thead>
+    </table>
+
     <div class="footer">
         <div class="legend">
             <i class="fa fa-circle text-info"></i> Total Nominal Transaksi : Rp <span id="total_data"></span>
@@ -34,6 +51,25 @@
 @endsection
 
 @section('script_custom')
+<script type="text/javascript" src="{{ url('DataTables/datatables.min.js') }}"></script>
+
+    <script type="text/javascript">
+        var url = '{{ url("api/transaksi/dataTable") }}';
+
+        var tabel = $("#data-list").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: url,
+                data: function (d) {
+                    d.tgl_awal = $("#tgl_awal").val();
+                    d.tgl_akhir = $("#tgl_akhir").val();
+                }
+            },
+
+        });
+    </script>
+
     <script src="{{ url('Chartist/chartist.min.js') }}"></script>
     <script type="text/javascript">
         var dataSales = {
@@ -79,6 +115,7 @@
                     $("#total_data").text(objData['total']);
                     $("#tgl_data").text(objData['tgl_update']);
                     initChartist();
+                    tabel.ajax.reload();
                 },
                 error: function(jqXHR, textStatus, errorMsg) {
                     alert('Error : ' + errorMsg);

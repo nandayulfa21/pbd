@@ -26,3 +26,4 @@ Route::get('/checkout', [Transaksi::class, 'checkout']);
 Route::post('/checkout', [Transaksi::class, 'store']);
 
 Route::get('/transaksi', [Transaksi::class, 'index']);
+Route::get('/laporan', [Transaksi::class, 'laporan']);

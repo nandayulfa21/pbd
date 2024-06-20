@@ -203,4 +203,57 @@ class Transaksi extends Controller
 
         return json_encode($data_json);
     }
+
+    public function laporan()
+    {
+        return view('transaksi/laporan');
+    }
+    public function laporan_api(Request $request)
+    {
+        //
+        $label = [];
+        $data = [];
+        $data_1d = [];
+        $total = 0;
+        $tgl_request_awal = $request->get('tanggal_awal');
+        $tgl_request_akhir = $request->get('tanggal_akhir');
+
+        if ($tgl_request_awal == null || $tgl_request_awal == '') {
+            $tgl_awal = DATE("Y-m-d", strtotime("-14 days"));
+            $tgl_sekarang = $tgl_awal;
+            $tgl_akhir = date("Y-m-d");
+        } else {
+            $tgl_awal = date("d-M-Y H:i:s", strtotime($tgl_request_awal));
+            $tgl_akhir = date("Y-m-d", strtotime($tgl_awal . "+14 days"));
+            $tgl_sekarang = $tgl_awal;
+        }
+
+        if ($tgl_request_akhir != null && $tgl_request_akhir != '') {
+        $tgl_akhir = date("Y-m-d", strtotime($tgl_request_akhir));;
+        }
+
+        while ($tgl_awal <= $tgl_akhir) {
+            $data_db = TransaksiModel::selectRaw('???')
+            ->whereRaw('DATE(tgl_transaksi) = "' . $tgl_awal . '"')
+            ->first();
+            $data_1d[] = $data_db->total == null ? 0 : $data_db->total;
+            $total += $data_db->total == null ? 0 : $data_db->total;
+            $label[] = date("d-M-Y", strtotime($tgl_awal));
+            if ($tgl_awal == $tgl_akhir) {
+                $data_1d[] = $data_db->total == null ? 0 : $data_db->total;
+            }
+            $tgl_awal = date("Y-m-d", strtotime($tgl_awal . ' +1 day'));
+        }
+
+        $data[] = $data_1d;
+        $label_tgl = date("d-M-Y", strtotime($tgl_sekarang)).' s/d '.date("d-M-Y",
+        strtotime($tgl_akhir));
+        $data_json = [
+        "data" => $data,
+        "label" => $label,
+        "total" => number_format($total, 0, ',', '.'),
+        "tgl_update" => $label_tgl
+        ];
+        return json_encode($data_json);
+    }
 }

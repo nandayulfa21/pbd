@@ -23,7 +23,7 @@
 		<tr>
 			<td>Provinsi</td>
 			<td>
-			<select name="provinsi" id="provinsi" class="form-control" required=""onchange="ambil_kota()">
+                <select name="provinsi" id="provinsi" class="form-control" required="" onchange="ambil_kota()">
                     <option value="">--Pilih Salah Satu--</option>
                 </select>
 			</td>
@@ -31,8 +31,8 @@
 		<tr>
 			<td>Kota</td>
 			<td>
-			<select name="kota" id="kota" class="form-control" required=""onchange="ambil_kecamatan()">
-            <option value="">--Pilih Salah Satu--</option>
+                <select name="kota" id="kota" class="form-control" required="" onchange="ambil_kecamatan()">
+                    <option value="">--Pilih Salah Satu--</option>
                 </select>
 			</td>
 		</tr>
@@ -56,46 +56,51 @@
 
 @section('script_custom')
 <script>
-	function ambil_prov() {
-	var link = '{{ url("api/provinsi") }}';
-	$.ajax(link, {
-	type: 'GET',
-	success : function (data, status, xhr) {
-	$('#provinsi').html(data);
-	},
-	error : function (jqXHR, textStatus, errorMsg) {
-	alert('Error Pengambilan Data Provinsi : ' + errorMsg);
-	}
-	})
-	}
+function ambil_prov() {
+    var link = '{{ url("api/provinsi") }}';
+
+    $.ajax(link, {
+        type: 'GET',
+        success : function (data, status, xhr) {
+            $('#provinsi').html(data);
+        },
+        error : function (jqXHR, textStatus, errorMsg) {
+            alert('Error Pengambilan Data Provinsi : ' + errorMsg);
+        }
+    })
+}
+
 ambil_prov();
 
-	function ambil_kota() {
-	var prov = $('#provinsi').val().split("||");
-	var link = '{{ url("api/kota/") }}' + '/' + prov[0];
-	$.ajax(link, {
-		type:'GET',
-		succes : function (data, status, xhr) {
-			$('#kota').html(data);
-		},
-		error : function (jqXHR, textStatus, errorMsg) {
-			alert('Error Pengambilan Data Kota : ' + errorMsg);
-		}
-	})
-	}
+function ambil_kota() {
+    var prov = $('#provinsi').val().split("||");
+    var link = '{{ url("api/kota/") }}' + '/' + prov[0];
 
-	function ambil_kecamatan() {
-	var kota = $('#kota').val().split("||");
-	var link = '{{ url("api/kecamatan/") }}' + '/' + kota[0];
-	$.ajax(link, {
-		type:'GET',
-		succes : function (data, status, xhr) {
-			$('#kecamatan').html(data);
-		},
-		error : function (jqXHR, textStatus, errorMsg) {
-			alert('Error Pengambilan Data Kecamatan : ' + errorMsg);
-		}
-	})
-	}
+    $.ajax(link, {
+        type: 'GET',
+        success : function (data, status, xhr) {
+            $('#kota').html(data);
+        },
+        error : function (jqXHR, textStatus, errorMsg) {
+            alert('Error Pengambilan Data Kota : ' + errorMsg);
+        }
+    })
+}
+
+function ambil_kecamatan() {
+    var kota = $('#kota').val().split("||");
+    var link = '{{ url("api/kecamatan/") }}' + '/' + kota[0];
+
+    $.ajax(link, {
+        type: 'GET',
+        success : function (data, status, xhr) {
+            $('#kecamatan').html(data);
+
+        },
+        error : function (jqXHR, textStatus, errorMsg) {
+            alert('Error Pengambilan Data Kecamatan : ' + errorMsg);
+        }
+    })
+}
 </script>
 @endsection

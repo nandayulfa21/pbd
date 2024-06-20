@@ -46,6 +46,12 @@
 					</a>
 				</li>
 				<li class="nav-item">
+					<a href="{{ url('laporan') }}" class="nav-link">
+						<i class="fas fa-circle nav-icon"></i>
+						<p>Laporan</p>
+					</a>
+				</li>
+				<li class="nav-item">
 					<a href="{{ url('login') }}" class="nav-link">
 						<i class="fas fa-circle nav-icon"></i>
 						<p>Login</p>

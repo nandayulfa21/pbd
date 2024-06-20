@@ -233,7 +233,7 @@ class Transaksi extends Controller
         }
 
         while ($tgl_awal <= $tgl_akhir) {
-            $data_db = TransaksiModel::selectRaw('???')
+            $data_db = TransaksiModel::selectRaw('SUM(total_bayar) as total')
             ->whereRaw('DATE(tgl_transaksi) = "' . $tgl_awal . '"')
             ->first();
             $data_1d[] = $data_db->total == null ? 0 : $data_db->total;

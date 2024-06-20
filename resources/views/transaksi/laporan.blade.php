@@ -110,7 +110,7 @@ id="total_data"></span>
         $("#total_data").text(objData['total']);
         $("#tgl_data").text(objData['tgl_update']);
         initChartist();
-        tabel.ajax.reload():
+        tabel.ajax.reload();
     },
         error: function(jqXHR, textStatus, errorMsg) {
         alert('Error : ' + errorMsg);

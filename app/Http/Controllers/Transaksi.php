@@ -31,8 +31,8 @@ class Transaksi extends Controller
     {
         //
         $data = KeranjangModel::leftJoin('produk', 'produk.id_produk', '=', 'keranjang.id_produk')
-        ->selectRaw('sum(produk.harga * keranjang.jumlah_beli) as total')
-        ->first();
+            ->selectRaw('sum(produk.harga * keranjang.jumlah_beli) as total')
+            ->first();
 
         $kecamatan = explode('||', $request->get('kecamatan'));
         $provinsi = explode('||', $request->get('provinsi'));
@@ -52,10 +52,10 @@ class Transaksi extends Controller
         $saved = $trans->save();
 
         $all_detail = KeranjangModel::leftJoin('produk', 'produk.id_produk', '=', 'keranjang.id_produk')
-        ->select('keranjang.*', 'produk.nama_produk', 'produk.harga')
-        ->get();
+            ->select('keranjang.*', 'produk.nama_produk', 'produk.harga')
+            ->get();
 
-        foreach($all_detail as $value) {
+        foreach ($all_detail as $value) {
             $detail = new DetailTransaksiModel([
                 'id_transaksi' => $trans->id_transaksi,
                 'id_produk' => $value->id_produk,
@@ -132,18 +132,18 @@ class Transaksi extends Controller
         }
 
         $data_db_total = TransaksiModel::all();
-        $data_db_filtered = TransaksiModel::where('nama', 'like', '%'.$search['value'].'%');
+        $data_db_filtered = TransaksiModel::where('nama', 'like', '%' . $search['value'] . '%');
 
         if ($tgl_awal != '' && $tgl_awal != null) {
-            $data_db_filtered = $data_db_filtered->whereRaw('DATE(tgl_transaksi) >= "'. $tgl_awal.'"');
+            $data_db_filtered = $data_db_filtered->whereRaw('DATE(tgl_transaksi) >= "' . $tgl_awal . '"');
         }
 
         if ($tgl_akhir != '' && $tgl_akhir != null) {
-            $data_db_filtered = $data_db_filtered->whereRaw('DATE(tgl_transaksi) <= "'. $tgl_akhir.'"');
+            $data_db_filtered = $data_db_filtered->whereRaw('DATE(tgl_transaksi) <= "' . $tgl_akhir . '"');
         }
 
         if ($prov != '' && $prov != null) {
-            $data_db_filtered = $data_db_filtered->where('provinsi', 'like', '%'.$prov.'%');
+            $data_db_filtered = $data_db_filtered->where('provinsi', 'like', '%' . $prov . '%');
         }
 
         if ($min_total != '' && $min_total != null) {
@@ -152,18 +152,18 @@ class Transaksi extends Controller
 
         $data_db_filtered = $data_db_filtered->get();
 
-        $data_db = TransaksiModel::where('nama', 'like', '%'.$search['value'].'%');
+        $data_db = TransaksiModel::where('nama', 'like', '%' . $search['value'] . '%');
 
         if ($tgl_awal != '' && $tgl_awal != null) {
-            $data_db = $data_db->whereRaw('DATE(tgl_transaksi) >= "'. $tgl_awal.'"');
+            $data_db = $data_db->whereRaw('DATE(tgl_transaksi) >= "' . $tgl_awal . '"');
         }
 
         if ($tgl_akhir != '' && $tgl_akhir != null) {
-            $data_db = $data_db->whereRaw('DATE(tgl_transaksi) <= "'. $tgl_akhir.'"');
+            $data_db = $data_db->whereRaw('DATE(tgl_transaksi) <= "' . $tgl_akhir . '"');
         }
 
         if ($prov != '' && $prov != null) {
-            $data_db = $data_db->where('provinsi', 'like', '%'.$prov.'%');
+            $data_db = $data_db->where('provinsi', 'like', '%' . $prov . '%');
         }
 
         if ($min_total != '' && $min_total != null) {
@@ -171,21 +171,21 @@ class Transaksi extends Controller
         }
 
         $data_db = $data_db->offset($request->query('start'))
-        ->limit($request->query('length'))
-        ->orderByRaw($orderby.' '.$order[0]['dir'])
-        ->get(['transaksi.*']);
+            ->limit($request->query('length'))
+            ->orderByRaw($orderby . ' ' . $order[0]['dir'])
+            ->get(['transaksi.*']);
 
 
         $data_formatted = [];
 
         foreach ($data_db as $key => $value) {
 
-            $nominal = 'Rp '.number_format($value->total_bayar);
-            $alamat = $value->alamat_jalan.' '.$value->kecamatan.' '.$value->kota.' '.$value->provinsi;
+            $nominal = 'Rp ' . number_format($value->total_bayar);
+            $alamat = $value->alamat_jalan . ' ' . $value->kecamatan . ' ' . $value->kota . ' ' . $value->provinsi;
             $tanggal = date("d-M-Y H:i:s", strtotime($value->tgl_transaksi));
 
             $row_data = [];
-            $row_data[] = $key+1;
+            $row_data[] = $key + 1;
             $row_data[] = $tanggal;
             $row_data[] = $value->nama;
             $row_data[] = $alamat;
@@ -219,7 +219,7 @@ class Transaksi extends Controller
         $tgl_request_akhir = $request->get('tanggal_akhir');
 
         if ($tgl_request_awal == null || $tgl_request_awal == '') {
-            $tgl_awal = DATE("Y-m-d", strtotime("-14 days"));
+            $tgl_awal = date("Y-m-d", strtotime("-14 days"));
             $tgl_sekarang = $tgl_awal;
             $tgl_akhir = date("Y-m-d");
         } else {
@@ -229,13 +229,13 @@ class Transaksi extends Controller
         }
 
         if ($tgl_request_akhir != null && $tgl_request_akhir != '') {
-        $tgl_akhir = date("Y-m-d", strtotime($tgl_request_akhir));;
+            $tgl_akhir = date("Y-m-d", strtotime($tgl_request_akhir));
         }
 
         while ($tgl_awal <= $tgl_akhir) {
             $data_db = TransaksiModel::selectRaw('SUM(total_bayar) as total')
-            ->whereRaw('DATE(tgl_transaksi) = "' . $tgl_awal . '"')
-            ->first();
+                ->whereRaw('DATE(tgl_transaksi) = "' . $tgl_awal . '"')
+                ->first();
             $data_1d[] = $data_db->total == null ? 0 : $data_db->total;
             $total += $data_db->total == null ? 0 : $data_db->total;
             $label[] = date("d-M-Y", strtotime($tgl_awal));
@@ -244,15 +244,14 @@ class Transaksi extends Controller
             }
             $tgl_awal = date("Y-m-d", strtotime($tgl_awal . ' +1 day'));
         }
-
         $data[] = $data_1d;
-        $label_tgl = date("d-M-Y", strtotime($tgl_sekarang)).' s/d '.date("d-M-Y",
-        strtotime($tgl_akhir));
+
+        $label_tgl = date("d-M-Y", strtotime($tgl_sekarang)).' s/d '.date("d-M-Y", strtotime($tgl_akhir));
         $data_json = [
-        "data" => $data,
-        "label" => $label,
-        "total" => number_format($total, 0, ',', '.'),
-        "tgl_update" => $label_tgl
+            "data" => $data,
+            "label" => $label,
+            "total" => number_format($total, 0, ',', '.'),
+            "tgl_update" => $label_tgl
         ];
         return json_encode($data_json);
     }

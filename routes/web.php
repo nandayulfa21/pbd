@@ -27,3 +27,4 @@ Route::post('/checkout', [Transaksi::class, 'store']);
 
 Route::get('/transaksi', [Transaksi::class, 'index']);
 Route::get('/laporan', [Transaksi::class, 'laporan']);
+Route::post('/produk', [Produk::class, 'store_no_api']);

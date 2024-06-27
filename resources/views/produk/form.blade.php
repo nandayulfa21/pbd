@@ -5,31 +5,6 @@
 @endsection
 
 @section('konten')
-<style type="text/css">
- .upload-area {
- width: 70%;
- height: 150px;
- border: 2px solid lightgray;
- border-radius: 3px;
- margin: 0 auto;
- text-align: center;
- overflow: auto;
-}
- .upload-area:hover {
- cursor: pointer;
- }
- .upload-area h2 {
- text-align: center;
- font-weight: normal;
- font-family: sans-serif;
- line-height: 50px;
- color: gray;
- }
- #file {
- display: none;
- }
-</style>
-
 <form id="formData" enctype="multipart/form-data" method="POST" action="{{ url('produk') }}">
  @csrf
 	<table>
@@ -82,6 +57,31 @@
 		</tr>
 	</table>
 </form>
+
+<style type="text/css">
+ .upload-area {
+ width: 70%;
+ height: 150px;
+ border: 2px solid lightgray;
+ border-radius: 3px;
+ margin: 0 auto;
+ text-align: center;
+ overflow: auto;
+}
+ .upload-area:hover {
+ cursor: pointer;
+ }
+ .upload-area h2 {
+ text-align: center;
+ font-weight: normal;
+ font-family: sans-serif;
+ line-height: 50px;
+ color: gray;
+ }
+ #file {
+ display: none;
+ }
+</style>
 @endsection
 
 @section('script_custom')

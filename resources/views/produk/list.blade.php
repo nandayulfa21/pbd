@@ -108,12 +108,12 @@ List Produk
             })
         }
 
-        ambil_data();
+        // ambil_data();
 
         $("form").on('submit', function(e){
             e.preventDefault();
             var kode = $("input[name=cari]").val();
-            ambil_data(kode);
+            // ambil_data(kode);
         })
 
         function resetTable() {

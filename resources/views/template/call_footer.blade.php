@@ -1,8 +1,8 @@
 <footer class="main-footer">
 	<div class="float-right d-none d-sm-block">
-		<b>Version</b> 3.0.1-pre
+		<b>Pemrograman Basis Data</b> Semester 4
 	</div>
-	<strong>Copyright Web Programming II</strong>
+	<strong> Copyright 2024 PBD </strong>0884 0893 0924
 </footer>
 
 <div id="sidebar-overlay"></div>
